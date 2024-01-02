@@ -23,60 +23,46 @@ namespace ClerkManagementApp
                 BindGridView();
             }
         }
-
+        static string Id;
         private void BindGridView()
         {
-            var clerks = _clerkService.GetAll();
-            _dataLayer.fillgridView(clerks, gv);
+            var query = _clerkService.GetAll();
+            _dataLayer.fillgridView(query, gv);
         }
 
         protected void gv_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var id = gv.SelectedRow.Cells[1].Text;
-            // Retrieve the clerk details and populate the form
-            var clerk = _clerkService.GetById(id);
-            if (clerk != null)
-            {
-                txtFirstName.Text = clerk.FirstName;
-                txtLastName.Text = clerk.LastName;
-                txtDateOfBirth.Text = clerk.DateOfBirth.ToString("yyyy-MM-dd");
-            }
+            Id = gv.SelectedRow.Cells[1].Text.ToString();
+            txtFirstName.Text = gv.SelectedRow.Cells[2].Text.ToString();
+            txtLastName.Text = gv.SelectedRow.Cells[3].Text.ToString();
+            txtDateOfBirth.Text = gv.SelectedRow.Cells[4].Text.ToString();
         }
 
-        protected void btnsave_Click(object sender, EventArgs e)
+        protected void btnSave_Click(object sender, EventArgs e)
         {
-            var newClerk = new ClerkModel
-            {
-                FirstName = txtFirstName.Text,
-                LastName = txtLastName.Text,
-                DateOfBirth = DateTime.Parse(txtDateOfBirth.Text)
-            };
-
-            _clerkService.Add();
-            BindGridView();
+            var query = _clerkService.Add();
+            string qry = query + txtFirstName.Text + "','" + txtLastName.Text + "','" + txtDateOfBirth.Text + "')";
+            lblMessage.Text = _dataLayer.insertUpdateCreateOrDelete(qry);
+            txtFirstName.Text = "";
+            txtLastName.Text = "";
+            txtDateOfBirth.Text = "";
         }
 
-        protected void btnupdate_Click(object sender, EventArgs e)
+        protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            string id = gv.SelectedRow.Cells[1].Text.ToString();
-            var existingClerk = _clerkService.GetById(id);
-
-            if (existingClerk != null)
-            {
-                existingClerk.LastName = txtLastName.Text;
-                existingClerk.FirstName = txtFirstName.Text;
-                existingClerk.DateOfBirth = DateTime.Parse(txtDateOfBirth.Text);
-
-                _clerkService.Update();
-                BindGridView();
-            }
+            var query = _clerkService.Update();
+            string qry = query + txtFirstName.Text + "',LastName='" + txtLastName.Text + "',DateOfBirth='" + txtDateOfBirth.Text + "'";
+            lblMessage.Text = _dataLayer.insertUpdateCreateOrDelete(qry);
+            txtFirstName.Text = "";
+            txtLastName.Text = "";
+            txtDateOfBirth.Text = "";
         }
 
-        protected void btndlt_Click(object sender, EventArgs e)
+        protected void btnDelete_Click(object sender, EventArgs e)
         {
-            string id = gv.SelectedRow.Cells[1].Text.ToString();
-            _clerkService.Delete();
-            BindGridView();
+            var query = _clerkService.Delete();
+            string qry = query + Id + "'";
+            lblMessage.Text = _dataLayer.insertUpdateCreateOrDelete(qry);
         }
     }
 }

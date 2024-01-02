@@ -50,7 +50,7 @@
                                         <div class="table-responsive">
                                             <asp:GridView ID="gv" Width="100%" AutoGenerateColumns="false" OnSelectedIndexChanged="gv_SelectedIndexChanged" runat="server">
                                                 <Columns>
-                                                    <asp:BoundField DataField="ClerkId" HeaderText="Clerk ID" SortExpression="ClerkId" />
+                                                    <asp:BoundField DataField="Id" HeaderText="Clerk ID" SortExpression="Id" />
                                                     <asp:BoundField DataField="FirstName" HeaderText="First Name" SortExpression="FirstName" />
                                                     <asp:BoundField DataField="LastName" HeaderText="Last Name" SortExpression="LastName" />
                                                     <asp:BoundField DataField="DateOfBirth" HeaderText="Date of Birth" SortExpression="DateOfBirth" />

@@ -1,4 +1,4 @@
-﻿namespace ClerkManagementApp.Migrations
+﻿namespace TaskManagementApp.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -9,7 +9,7 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(ClerkManagementApp.DAL.ClerkDbContext context)
